@@ -152,6 +152,7 @@ Scripts in the repository allow testing each model under multiple conditions
 
 ## 📁 Repository Structure
 
+```text
 ├── KNN.py
 ├── NeuralNetwork.py
 ├── SVM.py
@@ -171,6 +172,7 @@ Scripts in the repository allow testing each model under multiple conditions
 │
 ├── requirements.txt
 └── README.md
+```
 
 ---
 
