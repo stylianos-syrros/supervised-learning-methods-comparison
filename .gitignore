@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+
+# Editor / OS files
+*.swp
+*.swo
+*.tmp
+.DS_Store
+
+# Large or local-only data (can adjust as needed)
+# airlines_delay.csv
+
+# Files to keep out of the repository
+1ο Σετ Ασκήσεων 2020-21.pdf
+anafora.docx
