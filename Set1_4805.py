@@ -362,7 +362,7 @@ def askNeuralNetworkQuestions(file):
                 for i in range(len(n1_neurons)):
                     print("(70-30 train/test)Running Neural Network with ",activation_function,"activation function and K1=",n1_neurons[i])
                     mean_accuracy,f1 = NeuralNetwork(hidden_layers,n1_neurons[i],X=X_mobile,Y=Y_mobile,activation_hidden=activation_function,type="cross_val")
-                    print("Accuracy =",accuracy)
+                    print("Accuracy =",mean_accuracy)
                     print("F1-Score =",f1)
                     print("-------------------------------------")
 
@@ -389,7 +389,7 @@ def askNeuralNetworkQuestions(file):
                 for i in range(len(n1_neurons)):
                     print("(70-30 train/test)Running Neural Network with ",activation_function,"activation function and (K1,K2) = (",n1_neurons[i],n2_neurons[i],")")
                     accuracy,f1 = NeuralNetwork(hidden_layers,n1_neurons[i],n2_neurons[i],X_train_mobile,y_train_mobile,X_test_mobile,y_test_mobile,activation_hidden=activation_function)
-                    print("Accuracy =",f1)
+                    print("Accuracy =",accuracy)
                     print("F1-Score =",f1)
                     print("-------------------------------------")
             else:

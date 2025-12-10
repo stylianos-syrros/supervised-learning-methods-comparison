@@ -64,7 +64,7 @@ if(num==1):
     layers=(neurons)
 else:
     neurons1=int(input("Please give number of neurons for the first layer: "))
-    neurons2=int(input("Please give number of neurons for the first layer: "))
+    neurons2=int(input("Please give number of neurons for the second layer: "))
     layers=(neurons1,neurons2)
 model = MLPClassifier(hidden_layer_sizes=layers,solver='sgd',activation='tanh')
 model.out_activation_ = 'softmax'

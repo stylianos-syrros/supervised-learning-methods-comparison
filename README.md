@@ -193,6 +193,86 @@ python SVM.py
 python NaiveBayes.py
 ```
 
+🎛️ Running the Main Interactive Program (Set1_4805.py)
+Although each model script (e.g., KNN.py, SVM.py) can run independently,
+the main way to use the project is through the interactive controller:
+👉 Set1_4805.py
+This script provides a full menu-driven interface that lets you:
+- Select which dataset to use
+- Choose a machine learning method
+- Choose an evaluation method
+- Configure hyperparameters (when needed)
+
+▶ Start the interface:
+
+```bash
+python Set1_4805.py
+```
+
+🧭 Interactive Menu Navigation
+
+The program uses the `inquirer` library to display interactive terminal menus:
+- Navigate using arrow keys (↑ ↓)
+- Press Enter to select
+- Prompts update dynamically based on your previous choices
+
+📌 Menu Flow Overview
+
+1️⃣ **Select CSV File**
+
+Choose between:
+- `airlines_delay.csv` → flight delay classification
+- `train.csv` → mobile/tabular classification
+
+The script automatically performs preprocessing (label encoding + scaling).
+
+2️⃣ **Select Method**
+
+You choose which model to run:
+- k-NN Nearest Neighbors
+- Bayes (Naive Bayes)
+- Neural Network (MLP)
+- SVM
+
+Each method opens additional menus for model parameters.
+
+3️⃣ **Select Training Method**
+
+- `test_set` → 70/30 Train–Test split
+- `cross_validation` → 10-Fold Cross Validation
+
+⚙️ Hyperparameter Prompts
+
+Depending on the selected method:
+
+🔹 **kNN**
+- Select value of K (e.g., 1, 3, 5, 10)
+
+🔹 **SVM**
+- Select kernel (linear or RBF)
+- Select C value
+- If RBF → select gamma value
+
+🔹 **Neural Network**
+- Select number of hidden layers (1 or 2)
+- Select neurons per layer
+- Select activation function (logistic or tanh)
+
+🔹 **Naive Bayes**
+- Runs immediately (no parameters).
+
+📤 Output
+
+Each experiment prints:
+- Accuracy
+- F1-score
+
+For cross-validation experiments:
+- Mean Accuracy
+- Mean F1-score
+
+This makes `Set1_4805.py` the central hub for running all comparisons in the project.
+
 ## Dependencies
 
 Minimal Python requirements:
@@ -202,6 +282,7 @@ Minimal Python requirements:
 - scikit-learn
 - tensorflow
 - matplotlib
+- inquirer
 
 ## 🎯 Goal of the Project
 
@@ -211,4 +292,3 @@ and how different algorithms compare when applied to the same datasets.
 
 It serves as a practical exploration of model behavior, evaluation methods, and
 feature engineering choices in real-world tabular machine learning.
-

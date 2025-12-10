@@ -58,7 +58,7 @@ def createOutput(yTest,name):
 print("1. Linear\n2. Gaussian")
 num=int(input("Please choose kernel function(1 or 2): "))
 while((num!=1) and (num!=2)):
-    num=int(input("Please give number of hidden layers(1 or 2): "))
+    num=int(input("Please choose kernel function (1 or 2): "))
 if(num==1):
     model = SVC(kernel= 'linear', decision_function_shape='ovr')
 else:
