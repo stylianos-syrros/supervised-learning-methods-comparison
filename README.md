@@ -1,9 +1,32 @@
 # ML Model Comparison: kNN, Neural Networks, SVMs & Naive Bayes
 
-This folder contains a small machine learning project where I experimented with
-several classic classification algorithms on different datasets.
+This folder contains a machine learning project where I experimented with
+several classic supervised classification algorithms across multiple datasets.
 The goal was to understand how each model behaves in practice, how sensitive it is
 to hyperparameters, and how evaluation metrics change across datasets.
+
+> A hands-on comparison of classic supervised learning algorithms  
+> *(kNN, SVMs, Naive Bayes, MLP Neural Networks)*  
+> on multiple tabular classification datasets.  
+> Includes custom distance metrics, cross-validation experiments,  
+> and detailed evaluations.
+
+---
+
+## 📊 Sample Results (on the `train.csv` classification dataset)
+
+Below is a small snapshot of representative model performance:
+
+| Model | Accuracy | F1 Score |
+|-------|----------|----------|
+| **kNN (K=5, cosine distance)** | **0.858** | **0.856** |
+| **SVM (RBF kernel)** | **0.864** | **0.863** |
+| **Neural Network (ReLU MLP)** | **0.893** | — |
+| **Naive Bayes** | **0.625** | **0.630** |
+
+*Note: These values come from experiments on the `train.csv` dataset and are included only as indicative results to illustrate typical performance differences between the models.*
+
+---
 
 ## Project Overview
 
@@ -15,84 +38,70 @@ The code focuses on comparing four families of models:
 4. **Naive Bayes**
 
 The experiments are implemented in Python using:
-- `scikit-learn` for kNN, SVMs and Naive Bayes
-- `TensorFlow / Keras` for the neural networks
-- `pandas` / `numpy` for data handling
 
-The work originally started in the context of a machine learning course, but the
-code here is organized and documented as a standalone project.
+- `scikit-learn` for kNN, SVMs and Naive Bayes  
+- `TensorFlow / Keras` for the neural networks  
+- `pandas` / `numpy` for data handling  
+
+The work originally started in the context of a machine learning course,
+but the repository is structured and documented as an independent project.
+
+---
 
 ## Datasets
 
-The project uses tabular datasets related to flight delays and another
-classification problem.
+Two main tabular datasets were used:
 
-- **Airline delay dataset (`airlines_delay.csv`)**
-  - Flight-level information (airline, origin/destination airports, delay label, etc.)
-  - Categorical features are encoded using `LabelEncoder`
-  - A random 1% subsample is often used for faster experimentation
+### **Airline delay dataset (`airlines_delay.csv`)**
+- Contains flight-level information (airline, airports, delay labels, etc.)
+- Categorical features are encoded using `LabelEncoder`
+- Often a 1% subsample is used for faster experimentation
 
-- **Mobile / tabular dataset (`train.csv`)**
-  - A second tabular classification problem
-  - Used to see how the same models behave on a different feature space
+### **Mobile/tabular dataset (`train.csv`)**
+- A second classification dataset
+- Useful to compare model behavior across different feature spaces
 
-> Note: `airlines_delay.csv` is relatively large. In some setups it might be
-> preferable to keep it outside version control and download it separately.
+> Note: `airlines_delay.csv` is large, so it may be preferable  
+> to keep it outside version control and load it locally.
+
+---
 
 ## Methods
 
 ### 1. k-Nearest Neighbors (kNN)
 
-- Implemented with scikit-learn’s `KNeighborsClassifier`
-- Experiments with different values of **K** (e.g. 1, 5, 10)
-- Multiple distance metrics:
-  - **Euclidean** distance on continuous features
-  - **Cosine** / **Hamming** distance on discrete features
-  - A custom distance that combines continuous and discrete parts
+- Implemented with `KNeighborsClassifier`
+- Tested values of K = 1, 5, 10
+- Distance metrics:
+  - Euclidean for continuous variables
+  - Cosine / Hamming for categorical variables
+  - A **hybrid custom distance** mixing Euclidean + Hamming
 
-For the image-style experiments (when used), each input example is represented as
-high-dimensional feature vectors (e.g. flattened images).
+### 2. Neural Networks (MLP)
 
-Typical observations:
-- Performance is quite stable across different K values
-- Accuracy and F1 score often peak around intermediate values of K
-
-### 2. Neural Networks
-
-- Implemented with `TensorFlow` / `Keras`
-- Fully-connected feed-forward networks (MLPs) with:
-  - 1 or 2 hidden layers
-  - Hidden layers with hundreds of neurons
-  - Activation functions such as **sigmoid** and **ReLU**
-  - `softmax` output layer for multi-class classification
-
-Example experiments:
-- Compare architectures such as:
-  - 1 hidden layer with 500 neurons
-  - 2 hidden layers with 500 and 200 neurons
-- Measure accuracy on the test set and see how depth and activation functions
-  affect performance
+- Fully connected feed-forward networks using TensorFlow/Keras
+- Architectures tested:
+  - 1×500 hidden layer
+  - 500 → 200 two-layer networks
+- Activation functions: **sigmoid**, **ReLU**
+- Output layer: softmax
 
 ### 3. Support Vector Machines (SVMs)
 
-- Implemented with scikit-learn’s `SVC`
-- Multi-class classification is handled with a **One-vs-Rest (OvR)** strategy
-- Different kernel functions are tested:
-  - **Linear**
-  - **RBF / Gaussian**
-  - **Cosine** (via a custom kernel or precomputed similarity)
-
-In practice, the Gaussian (RBF) kernel often achieves the best trade-off between
-accuracy and F1 score on these datasets.
+- Implemented with `SVC`
+- One-vs-Rest strategy for multi-class cases
+- Kernels tested:
+  - Linear
+  - RBF (Gaussian)
+  - Cosine (via custom kernel)
 
 ### 4. Naive Bayes
 
-- Implemented as a **Gaussian Naive Bayes** classifier
-- Assumes that features are conditionally independent given the class
-- Each feature is modeled with a Gaussian distribution per class
+- Gaussian Naive Bayes
+- Extremely fast training time
+- Performs surprisingly well on some tabular settings
 
-Naive Bayes is very fast to train and works surprisingly well in some settings,
-although the independence assumption is quite strong.
+---
 
 ## Evaluation
 
@@ -100,65 +109,82 @@ The models are evaluated using:
 
 - **Accuracy**
 - **F1 score**
-- Train / test splits (e.g. 70% / 30%)
-- In some scripts: k-fold cross-validation on tabular datasets
+- **Train/test splits** (70/30)
+- **k-fold cross-validation** for some experiments
 
-Several scripts in this folder:
-- Train models on the airline delay and mobile datasets
-- Compare simple train/test splits versus cross-validation
-- Print or log the resulting metrics for each configuration
+Scripts in the repository allow testing each model under multiple conditions
+(train/test split vs cross-validation, different feature encodings, etc.)
+
+---
 
 ## File overview
 
 - **KNN.py**
-  - Trains a k-Nearest Neighbors classifier on `train.csv` and produces predictions
-    for `test.csv`. Encodes the `color` feature numerically and saves the results
-    as `KNN_output.csv`.
+  - kNN classifier on `train.csv`, writing predictions to `KNN_output.csv`.
 
 - **NeuralNetwork.py**
-  - Builds a feed-forward neural network (MLP) using `sklearn.neural_network.MLPClassifier`.
-    Lets you choose the number of hidden layers and neurons from the console and writes
-    predictions for `test.csv` to `NeuralNetwork_output.csv`.
+  - MLP classifier with user-defined hidden layers.
+  - Writes predictions to `NeuralNetwork_output.csv`.
 
 - **SVM.py**
-  - Trains a Support Vector Machine classifier (`SVC`) on `train.csv`. Allows choosing
-    between a linear and an RBF (Gaussian) kernel and optionally setting the `gamma`
-    parameter. Saves predictions for `test.csv` to `SVM_output.csv`.
+  - Linear / Gaussian SVM with optional `gamma` parameter.
+  - Outputs predictions to `SVM_output.csv`.
 
 - **NaiveBayes.py**
-  - Uses a Gaussian Naive Bayes classifier on `train.csv` and writes the predicted
-    labels for `test.csv` to `NaiveBayes_output.csv`.
+  - Gaussian Naive Bayes applied to `train.csv`.
+  - Outputs predictions to `NaiveBayes_output.csv`.
 
-- **Set1_4805.py** (and similar experiment scripts)
-  - Runs experiments on the airline delay and mobile datasets. Handles data loading,
-    encoding of categorical variables, train/test splits and custom distance metrics
-    (e.g. combining Euclidean and Hamming) that are used by some of the models.
+- **Set1_4805.py**
+  - Main experimental framework: dataset loading, encoding, train/test splits,
+    and combined Euclidean + Hamming distance metrics.
 
 - **Set_Airlines_delay_*.py**
-  - Focused experiments on the airline delay dataset using different algorithms
-    (e.g. kNN, Naive Bayes). There are versions that use a simple train/test split
-    and versions that perform k-fold cross-validation.
+  - Airline-delay-specific experiments using kNN or Naive Bayes  
+    (with versions for train/test split and cross-validation).
 
 - **Set_Train_*.py**
-  - Similar to the above, but targeting the dataset in `train.csv`. Used to compare
-    how the same algorithms behave on a different feature space.
+  - Equivalent experiments for the second dataset (`train.csv`).
 
 - **Test.py / Test2.py**
-  - Utility scripts used to try out variations of the models, parameters or data
-    preprocessing steps before integrating ideas into the main experiment files.
+  - Small utility scripts for testing parameters, preprocessing variations, etc.
+
+---
+
+## 📁 Repository Structure
+
+├── KNN.py
+├── NeuralNetwork.py
+├── SVM.py
+├── NaiveBayes.py
+│
+├── Set1_4805.py
+│
+├── Set_Airlines_delay_K_Nearest_Neighbors_Split.py
+├── Set_Airlines_delay_K_Nearest_Neighbors_Cross_Validation.py
+├── Set_Airlines_delay_Naive_Bayes_Split.py
+├── Set_Airlines_delay_Naive_Bayes_Cross_Validation.py
+│
+├── Set_Train_K_Nearest_Neighbors_Split.py
+├── Set_Train_K_Nearest_Neighbors_Cross_Validation.py
+├── Set_Train_Naive_Bayes_Split.py
+├── Set_Train_Naive_Bayes_Cross_Validation.py
+│
+├── requirements.txt
+└── README.md
+
+---
 
 ## How to Run
 
 ```bash
 # (Optional) create and activate a virtual environment
 python -m venv .venv
-# On Windows:
-.venv\Scripts\activate
+.venv\Scripts\activate   # On Windows
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Example: run one of the experiments
+# Run any model
 python KNN.py
 python NeuralNetwork.py
 python SVM.py
@@ -167,24 +193,20 @@ python NaiveBayes.py
 
 ## Dependencies
 
-Main Python packages:
+Minimal Python requirements:
 
 - numpy
 - pandas
 - scikit-learn
-- tensorflow (or tensorflow-cpu)
+- tensorflow
 - matplotlib
 
-A minimal `requirements.txt` could look like:
+## 🎯 Goal of the Project
 
-```text
-numpy
-pandas
-scikit-learn
-tensorflow
-matplotlib
-```
+This project is about hands-on experimentation with classic supervised learning models:
+understanding how distance metrics influence kNN, how hyperparameters affect neural networks,
+and how different algorithms compare when applied to the same datasets.
 
-This project is mainly about hands-on experimentation with classic ML models:
-understanding distance metrics, tuning hyperparameters, and comparing how
-different algorithms perform on the same datasets.
+It serves as a practical exploration of model behavior, evaluation methods, and
+feature engineering choices in real-world tabular machine learning.
+
